@@ -1,0 +1,33 @@
+{
+  "agent": "CustomerServiceAgent",
+  "conversations": {
+    "AC-1": {
+      "actions": [
+        "classify_issue",
+        "search_knowledge_base",
+        "create_case"
+      ],
+      "passed": true,
+      "topics": [
+        "triage",
+        "resolution",
+        "resolution"
+      ]
+    },
+    "AC-2": {
+      "actions": [
+        "classify_issue",
+        "search_knowledge_base",
+        "create_case"
+      ],
+      "passed": true,
+      "topics": [
+        "triage",
+        "resolution",
+        "resolution"
+      ]
+    }
+  },
+  "schemaVersion": 1,
+  "source": "Passport-Dev stamp at 2026-10-24T17:06:49.622Z"
+}

@@ -1,0 +1,143 @@
+{
+  "agents": [
+    {
+      "agent": "CustomerServiceAgent",
+      "items": [
+        {
+          "component": "AiAuthoringBundle:CustomerServiceAgent",
+          "name": "CustomerServiceAgent",
+          "neededBy": [
+            "Agent:CustomerServiceAgent"
+          ],
+          "status": "in-story",
+          "type": "AiAuthoringBundle"
+        },
+        {
+          "component": "ApexClass:IssueClassifier",
+          "name": "IssueClassifier",
+          "neededBy": [
+            "AgentAction:CustomerServiceAgent.triage.classify_issue"
+          ],
+          "status": "in-story",
+          "type": "ApexClass"
+        },
+        {
+          "component": "Flow:CreateCase",
+          "name": "CreateCase",
+          "neededBy": [
+            "AgentAction:CustomerServiceAgent.resolution.create_case"
+          ],
+          "status": "in-story",
+          "type": "Flow"
+        },
+        {
+          "component": "Flow:EscalateCase",
+          "name": "EscalateCase",
+          "neededBy": [
+            "AgentAction:CustomerServiceAgent.resolution.escalate_case"
+          ],
+          "status": "gap",
+          "type": "Flow",
+          "reason": "uncommitted"
+        },
+        {
+          "component": "Flow:FetchCustomer",
+          "name": "FetchCustomer",
+          "neededBy": [
+            "AgentAction:CustomerServiceAgent.triage.fetch_customer"
+          ],
+          "status": "in-story",
+          "type": "Flow"
+        },
+        {
+          "component": "Flow:SearchKnowledgeBase",
+          "name": "SearchKnowledgeBase",
+          "neededBy": [
+            "AgentAction:CustomerServiceAgent.triage.search_knowledge_base"
+          ],
+          "status": "in-story",
+          "type": "Flow"
+        }
+      ],
+      "model": "agent-script",
+      "ok": false,
+      "requirements": [
+        {
+          "code": "REQUIREMENT_AGENT_USER",
+          "fix": "Fix the agent user first (see the scan finding), then make sure the user exists in the target org.",
+          "message": "CustomerServiceAgent runs as an agent user, which is a Salesforce user record, not metadata. It does not travel with the story and must already exist in Passport-QA. The agent file does not name a user that will exist there.",
+          "proposedStep": {
+            "instructions": "Before deploying, in the Passport-QA org:\n1. Create the agent user if it does not exist: sf org create agent-user --target-org <Passport-QA alias>\n2. Assign the permission sets the agent's actions need to that user (sf org assign permset --on-behalf-of <agent username>).\n3. Make sure the agent file or sfdx-project.json \"replacements\" give this environment's agent username.",
+            "name": "Agent user for CustomerServiceAgent exists in Passport-QA",
+            "order": "before",
+            "type": "Manual Task"
+          },
+          "severity": "warn"
+        },
+        {
+          "code": "REQUIREMENT_PUBLISH_ACTIVATE",
+          "fix": "Add a post-deployment step to the user story that publishes and activates the agent, or keep the agent's GenAiPlannerBundle in source control so deployment publishes it.",
+          "message": "Deploying the authoring bundle does not make CustomerServiceAgent live. Without its GenAiPlannerBundle in source control, the agent must be published and activated in Passport-QA after every deployment.",
+          "proposedStep": {
+            "instructions": "After deploying, in the Passport-QA org:\nsf agent publish authoring-bundle --api-name CustomerServiceAgent --target-org <Passport-QA alias>\nsf agent activate --api-name CustomerServiceAgent --target-org <Passport-QA alias>",
+            "name": "Publish and activate CustomerServiceAgent in Passport-QA",
+            "order": "after",
+            "type": "Manual Task"
+          },
+          "severity": "warn"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "agent": "CustomerServiceAgent",
+      "code": "TRAVEL_GAP",
+      "component": "Flow:EscalateCase",
+      "fix": "Commit Flow \"EscalateCase\" to the story.",
+      "locations": [
+        {
+          "packageDir": "force-app",
+          "path": "force-app/customerServiceAgent/flows/EscalateCase.flow-meta.xml"
+        }
+      ],
+      "message": "Flow \"EscalateCase\" will not arrive in Passport-QA: it only exists as an uncommitted local file; commit it to the story so the promotion carries it.",
+      "severity": "error"
+    },
+    {
+      "agent": "CustomerServiceAgent",
+      "code": "REQUIREMENT_AGENT_USER",
+      "fix": "Fix the agent user first (see the scan finding), then make sure the user exists in the target org.",
+      "message": "CustomerServiceAgent runs as an agent user, which is a Salesforce user record, not metadata. It does not travel with the story and must already exist in Passport-QA. The agent file does not name a user that will exist there.",
+      "severity": "warn"
+    },
+    {
+      "agent": "CustomerServiceAgent",
+      "code": "REQUIREMENT_PUBLISH_ACTIVATE",
+      "fix": "Add a post-deployment step to the user story that publishes and activates the agent, or keep the agent's GenAiPlannerBundle in source control so deployment publishes it.",
+      "message": "Deploying the authoring bundle does not make CustomerServiceAgent live. Without its GenAiPlannerBundle in source control, the agent must be published and activated in Passport-QA after every deployment.",
+      "severity": "warn"
+    }
+  ],
+  "ok": false,
+  "schemaVersion": 1,
+  "story": {
+    "branch": "feature/US-0000025",
+    "committedFiles": 21,
+    "uncommittedFiles": 9
+  },
+  "summary": {
+    "gaps": 1,
+    "inStory": 5,
+    "onTarget": 0,
+    "platform": 0,
+    "requirements": 2
+  },
+  "target": {
+    "branch": "main",
+    "environment": "Passport-QA",
+    "ref": "origin/main",
+    "resolvedFrom": "pipeline"
+  },
+  "tool": "agent-passport@0.1.0"
+}

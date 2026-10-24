@@ -1,0 +1,346 @@
+{
+  "agents": [
+    {
+      "agent": "CustomerServiceAgent",
+      "agentType": "AgentforceServiceAgent",
+      "agentUser": "agent.user.bb2806c049fd@gmail.com",
+      "label": "Customer Service Agent",
+      "model": "agent-script",
+      "source": {
+        "packageDir": "force-app",
+        "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+      },
+      "edges": [
+        {
+          "from": "Agent:CustomerServiceAgent",
+          "kind": "defined-by",
+          "to": "AiAuthoringBundle:CustomerServiceAgent"
+        },
+        {
+          "from": "Agent:CustomerServiceAgent",
+          "kind": "has-subagent",
+          "to": "Subagent:CustomerServiceAgent.agent_router"
+        },
+        {
+          "from": "Agent:CustomerServiceAgent",
+          "kind": "has-subagent",
+          "to": "Subagent:CustomerServiceAgent.resolution"
+        },
+        {
+          "from": "Agent:CustomerServiceAgent",
+          "kind": "has-subagent",
+          "to": "Subagent:CustomerServiceAgent.triage"
+        },
+        {
+          "from": "Agent:CustomerServiceAgent",
+          "kind": "runs-as",
+          "to": "AgentUser:agent.user.bb2806c049fd@gmail.com"
+        },
+        {
+          "from": "AgentAction:CustomerServiceAgent.resolution.create_case",
+          "kind": "invokes",
+          "to": "Flow:CreateCase"
+        },
+        {
+          "from": "AgentAction:CustomerServiceAgent.resolution.escalate_case",
+          "kind": "invokes",
+          "to": "Flow:EscalateCase"
+        },
+        {
+          "from": "AgentAction:CustomerServiceAgent.triage.classify_issue",
+          "kind": "invokes",
+          "to": "ApexClass:IssueClassifier"
+        },
+        {
+          "from": "AgentAction:CustomerServiceAgent.triage.fetch_customer",
+          "kind": "invokes",
+          "to": "Flow:FetchCustomer"
+        },
+        {
+          "from": "AgentAction:CustomerServiceAgent.triage.search_knowledge_base",
+          "kind": "invokes",
+          "to": "Flow:SearchKnowledgeBase"
+        },
+        {
+          "from": "Subagent:CustomerServiceAgent.agent_router",
+          "kind": "transitions-to",
+          "to": "Subagent:CustomerServiceAgent.triage"
+        },
+        {
+          "from": "Subagent:CustomerServiceAgent.resolution",
+          "kind": "defines-action",
+          "to": "AgentAction:CustomerServiceAgent.resolution.create_case"
+        },
+        {
+          "from": "Subagent:CustomerServiceAgent.resolution",
+          "kind": "defines-action",
+          "to": "AgentAction:CustomerServiceAgent.resolution.escalate_case"
+        },
+        {
+          "from": "Subagent:CustomerServiceAgent.triage",
+          "kind": "defines-action",
+          "to": "AgentAction:CustomerServiceAgent.triage.classify_issue"
+        },
+        {
+          "from": "Subagent:CustomerServiceAgent.triage",
+          "kind": "defines-action",
+          "to": "AgentAction:CustomerServiceAgent.triage.fetch_customer"
+        },
+        {
+          "from": "Subagent:CustomerServiceAgent.triage",
+          "kind": "defines-action",
+          "to": "AgentAction:CustomerServiceAgent.triage.search_knowledge_base"
+        },
+        {
+          "from": "Subagent:CustomerServiceAgent.triage",
+          "kind": "transitions-to",
+          "to": "Subagent:CustomerServiceAgent.resolution"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "Agent:CustomerServiceAgent",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent",
+          "status": "present",
+          "type": "Agent",
+          "detail": {
+            "bundle": "CustomerServiceAgent"
+          }
+        },
+        {
+          "id": "AgentAction:CustomerServiceAgent.resolution.create_case",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent.resolution.create_case",
+          "status": "present",
+          "type": "AgentAction",
+          "detail": {
+            "target": "flow://CreateCase"
+          }
+        },
+        {
+          "id": "AgentAction:CustomerServiceAgent.resolution.escalate_case",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent.resolution.escalate_case",
+          "status": "present",
+          "type": "AgentAction",
+          "detail": {
+            "target": "flow://EscalateCase"
+          }
+        },
+        {
+          "id": "AgentAction:CustomerServiceAgent.triage.classify_issue",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent.triage.classify_issue",
+          "status": "present",
+          "type": "AgentAction",
+          "detail": {
+            "target": "apex://IssueClassifier"
+          }
+        },
+        {
+          "id": "AgentAction:CustomerServiceAgent.triage.fetch_customer",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent.triage.fetch_customer",
+          "status": "present",
+          "type": "AgentAction",
+          "detail": {
+            "target": "flow://FetchCustomer"
+          }
+        },
+        {
+          "id": "AgentAction:CustomerServiceAgent.triage.search_knowledge_base",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent.triage.search_knowledge_base",
+          "status": "present",
+          "type": "AgentAction",
+          "detail": {
+            "target": "flow://SearchKnowledgeBase"
+          }
+        },
+        {
+          "id": "AgentUser:agent.user.bb2806c049fd@gmail.com",
+          "locations": [],
+          "name": "agent.user.bb2806c049fd@gmail.com",
+          "status": "external",
+          "type": "AgentUser"
+        },
+        {
+          "id": "AiAuthoringBundle:CustomerServiceAgent",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent",
+          "status": "present",
+          "type": "AiAuthoringBundle"
+        },
+        {
+          "id": "ApexClass:IssueClassifier",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/classes/IssueClassifier.cls"
+            }
+          ],
+          "name": "IssueClassifier",
+          "status": "present",
+          "type": "ApexClass"
+        },
+        {
+          "id": "Flow:CreateCase",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/flows/CreateCase.flow-meta.xml"
+            }
+          ],
+          "name": "CreateCase",
+          "status": "present",
+          "type": "Flow"
+        },
+        {
+          "id": "Flow:EscalateCase",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/flows/EscalateCase.flow-meta.xml"
+            }
+          ],
+          "name": "EscalateCase",
+          "status": "present",
+          "type": "Flow"
+        },
+        {
+          "id": "Flow:FetchCustomer",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/flows/FetchCustomer.flow-meta.xml"
+            }
+          ],
+          "name": "FetchCustomer",
+          "status": "present",
+          "type": "Flow"
+        },
+        {
+          "id": "Flow:SearchKnowledgeBase",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/flows/SearchKnowledgeBase.flow-meta.xml"
+            }
+          ],
+          "name": "SearchKnowledgeBase",
+          "status": "present",
+          "type": "Flow"
+        },
+        {
+          "id": "Subagent:CustomerServiceAgent.agent_router",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent.agent_router",
+          "status": "present",
+          "type": "Subagent",
+          "detail": {
+            "kind": "start_agent"
+          }
+        },
+        {
+          "id": "Subagent:CustomerServiceAgent.resolution",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent.resolution",
+          "status": "present",
+          "type": "Subagent"
+        },
+        {
+          "id": "Subagent:CustomerServiceAgent.triage",
+          "locations": [
+            {
+              "packageDir": "force-app",
+              "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+            }
+          ],
+          "name": "CustomerServiceAgent.triage",
+          "status": "present",
+          "type": "Subagent"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "agent": "CustomerServiceAgent",
+      "code": "AGENT_USER_HARDCODED",
+      "fix": "Replace the username with a placeholder and an sfdx-project.json \"replacements\" entry, so each environment gets its own agent user.",
+      "locations": [
+        {
+          "packageDir": "force-app",
+          "path": "force-app/customerServiceAgent/aiAuthoringBundles/CustomerServiceAgent/CustomerServiceAgent.agent"
+        }
+      ],
+      "message": "Agent user \"agent.user.bb2806c049fd@gmail.com\" is a username from one specific org. Usernames are unique per org, so it will not exist in other environments.",
+      "severity": "warn"
+    }
+  ],
+  "project": {
+    "defaultPackageDir": "force-app",
+    "packageDirectories": [
+      {
+        "default": true,
+        "path": "force-app"
+      }
+    ]
+  },
+  "schemaVersion": 1,
+  "summary": {
+    "agents": 1,
+    "errors": 0,
+    "infos": 0,
+    "missing": 0,
+    "standard": 0,
+    "warnings": 1
+  },
+  "tool": "agent-passport@0.1.0"
+}

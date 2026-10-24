@@ -1,0 +1,45 @@
+{
+    "agent":  "CustomerServiceAgent",
+    "bundle":  "CustomerServiceAgent",
+    "conversations":  [
+                          {
+                              "criterion":  "A refund request routes to the resolution subagent.",
+                              "id":  "AC-1",
+                              "needsReview":  [
+                                                  "Write the customer message (utterance) that tests this criterion."
+                                              ],
+                              "story":  "US-0000025",
+                              "turns":  [
+                                            {
+                                                "expect":  {
+                                                               "inputsResolved":  true,
+                                                               "topic":  "resolution"
+                                                           },
+                                                "utterance":  "I was charged twice for my last order and I want a refund"
+                                            }
+                                        ]
+                          },
+                          {
+                              "criterion":  "The agent creates a real case and tells the customer the case number.",
+                              "id":  "AC-2",
+                              "needsReview":  [
+                                                  "Write the customer message (utterance) that tests this criterion."
+                                              ],
+                              "story":  "US-0000025",
+                              "turns":  [
+                                            {
+                                                "expect":  {
+                                                               "inputsResolved":  true,
+                                                               "actionsInclude":  [
+                                                                                      "create_case"
+                                                                                  ]
+                                                           },
+                                                "utterance":  "My order arrived damaged. Please open a support case for me and tell me the case number."
+                                            }
+                                        ]
+                          }
+                      ],
+    "passThreshold":  1,
+    "runsPerConversation":  3,
+    "schemaVersion":  1
+}

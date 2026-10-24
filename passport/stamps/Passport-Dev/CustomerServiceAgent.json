@@ -1,0 +1,165 @@
+{
+  "agent": "CustomerServiceAgent",
+  "environment": "Passport-Dev",
+  "fingerprint": "sha256:69b6cd71e17a5298747102310eae5df88ee1130be4913bca31b5d91bd00fc9dc",
+  "goldens": [
+    {
+      "criterion": "A refund request routes to the resolution subagent.",
+      "id": "AC-1",
+      "observed": {
+        "actions": [
+          "classify_issue",
+          "search_knowledge_base",
+          "create_case"
+        ],
+        "topics": [
+          "triage",
+          "resolution",
+          "resolution"
+        ]
+      },
+      "passed": true,
+      "passRate": 1,
+      "required": 3,
+      "runs": [
+        {
+          "checks": [
+            {
+              "detail": "turn 1: routed to resolution",
+              "name": "topic",
+              "passed": true
+            },
+            {
+              "detail": "turn 1: every action input was filled in",
+              "name": "inputs-resolved",
+              "passed": true
+            }
+          ],
+          "mode": "Live Test",
+          "passed": true,
+          "sessionId": "01a16ed6-96bc-7a27-981d-edd033449af7",
+          "startTime": "2026-10-24T16:55:20.018Z"
+        },
+        {
+          "checks": [
+            {
+              "detail": "turn 1: routed to resolution",
+              "name": "topic",
+              "passed": true
+            },
+            {
+              "detail": "turn 1: every action input was filled in",
+              "name": "inputs-resolved",
+              "passed": true
+            }
+          ],
+          "mode": "Live Test",
+          "passed": true,
+          "sessionId": "01a16ed7-2c1a-7b21-8f9e-608c1c5ea570",
+          "startTime": "2026-10-24T16:55:57.297Z"
+        },
+        {
+          "checks": [
+            {
+              "detail": "turn 1: routed to resolution",
+              "name": "topic",
+              "passed": true
+            },
+            {
+              "detail": "turn 1: every action input was filled in",
+              "name": "inputs-resolved",
+              "passed": true
+            }
+          ],
+          "mode": "Live Test",
+          "passed": true,
+          "sessionId": "01a16ed7-b9ae-7904-9a62-8193a9d06f40",
+          "startTime": "2026-10-24T16:56:33.395Z"
+        }
+      ]
+    },
+    {
+      "criterion": "The agent creates a real case and tells the customer the case number.",
+      "id": "AC-2",
+      "observed": {
+        "actions": [
+          "classify_issue",
+          "search_knowledge_base",
+          "create_case"
+        ],
+        "topics": [
+          "triage",
+          "resolution",
+          "resolution"
+        ]
+      },
+      "passed": true,
+      "passRate": 1,
+      "required": 3,
+      "runs": [
+        {
+          "checks": [
+            {
+              "detail": "turn 1: ran create_case",
+              "name": "action",
+              "passed": true
+            },
+            {
+              "detail": "turn 1: every action input was filled in",
+              "name": "inputs-resolved",
+              "passed": true
+            }
+          ],
+          "mode": "Live Test",
+          "passed": true,
+          "sessionId": "01a16ed8-48fd-75ce-be5a-642234f1ab6a",
+          "startTime": "2026-10-24T16:57:10.228Z"
+        },
+        {
+          "checks": [
+            {
+              "detail": "turn 1: ran create_case",
+              "name": "action",
+              "passed": true
+            },
+            {
+              "detail": "turn 1: every action input was filled in",
+              "name": "inputs-resolved",
+              "passed": true
+            }
+          ],
+          "mode": "Live Test",
+          "passed": true,
+          "sessionId": "01a16ed8-c9db-718e-a8d4-7f007276f452",
+          "startTime": "2026-10-24T16:57:43.041Z"
+        },
+        {
+          "checks": [
+            {
+              "detail": "turn 1: ran create_case",
+              "name": "action",
+              "passed": true
+            },
+            {
+              "detail": "turn 1: every action input was filled in",
+              "name": "inputs-resolved",
+              "passed": true
+            }
+          ],
+          "mode": "Live Test",
+          "passed": true,
+          "sessionId": "01a16ed9-4c59-7060-b6f4-9f3c7e3c48f4",
+          "startTime": "2026-10-24T16:58:17.211Z"
+        }
+      ]
+    }
+  ],
+  "goldensHash": "sha256:bef6184edf36fab0c6179d2725ad46364b78ba827e028eed4721d4a1ac26d412",
+  "mode": "live",
+  "passThreshold": 1,
+  "problems": [],
+  "schemaVersion": 1,
+  "stampedAt": "2026-10-24T17:06:49.622Z",
+  "tool": "agent-passport@0.1.0",
+  "verdict": "stamped"
+}
