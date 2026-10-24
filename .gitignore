@@ -1,0 +1,7 @@
+# Salesforce CLI caches and preview sessions (sessions stay on the machine that ran them)
+.sf/
+.sfdx/
+.localdevserver/
+# Agentia: per-user story context written by `agentia cicd work set`
+.agentia/config.user.json
+node_modules/
