@@ -29,6 +29,8 @@ variables:
       description: "Content of the top knowledge base article found"
    kb_search_complete: mutable boolean = False
       description: "Whether the knowledge base search has been executed"
+   case_number: mutable string = ""
+      description: "Case number returned by CreateCase, shared with the customer"
 
 system:
    instructions: "You are a customer service agent. Identify the customer, classify their issue, search the knowledge base for solutions, and create or escalate cases as needed. Be empathetic and solution-oriented."
@@ -170,23 +172,26 @@ subagent resolution:
 
    reasoning:
       instructions:->
+         if not @variables.case_number:
+            run @actions.create_case
+               with subject=@variables.issue_description
+               set @variables.case_number = @outputs.case_number
+
          if @variables.kb_article_found:
             | I found a knowledge base article that may help resolve your {!@variables.issue_type} issue.
               Share this solution with the customer: {!@variables.kb_article_content}
-              Also create a case to track this.
          else:
-            | I couldn't find a matching solution. Let me escalate this to a specialist.
+            | I couldn't find a matching solution. Escalate this case to a specialist with {!@actions.escalate_to_specialist}.
+
+         if @variables.case_number:
+            | Tell the customer that their support case number is {!@variables.case_number}.
 
          if @variables.customer_tier == "premium":
             | (Priority handling for premium customer)
 
       actions:
-         create_support_case: @actions.create_case
-            available when @variables.kb_article_found
-            with subject="{!@variables.issue_type}: {!@variables.issue_description}"
-
          escalate_to_specialist: @actions.escalate_case
             available when not @variables.kb_article_found
-            with case_id=""
-            with reason="No knowledge base solution found for {!@variables.issue_type} issue"
+            with case_id=@variables.case_number
+            with reason=@variables.issue_description
             with specialist_team=@variables.issue_type
